@@ -1,0 +1,16 @@
+version: "2.4"
+services:
+  jenkins:
+    image: jenkins/jenkins:alpine
+    container_name: jenkins
+    ports:
+      - "80:8080"
+      - "50000:50000"
+    environment:
+      - JAVA_OPTS=-Xmx1500m -Duser.timezone=GMT+8
+    volumes:
+      - /data/jenkins:/var/jenkins_home
+#    cpus: 3.5
+#    mem_limit: 1800m
+    user: root
+    restart: always

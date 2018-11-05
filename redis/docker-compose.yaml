@@ -1,0 +1,25 @@
+version: "2.4"
+services:
+  redis:
+    image: redis:4.0.11-alpine
+    container_name: redis
+    networks:
+      - redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - /var/lib/redis:/data
+      - ./redis.conf:/etc/redis.conf
+    restart: always
+    command: [ "redis-server", "/etc/redis.conf" ]
+    
+
+
+networks:
+  redis:
+    driver: bridge
+    name: redis
+
+#volumes:
+#  mongo_key:

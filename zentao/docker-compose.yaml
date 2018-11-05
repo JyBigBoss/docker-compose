@@ -1,0 +1,16 @@
+version: "2.4"
+services:
+  zentao:
+    image: zentao:10.4
+    container_name: zentao
+    ports:
+      - "80:80"
+      - "3306:3306"
+    environment:
+      - USER=root
+      - PASSWD=12345678
+      - BIND_ADDRESS=false
+    volumes:
+      - /data/zbox:/opt/zbox
+    cpu_percent: 70
+    restart: always

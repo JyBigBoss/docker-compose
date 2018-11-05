@@ -1,0 +1,26 @@
+version: "2.4"
+services:
+  mongodb1:
+    image: mongo:4.0.3
+    container_name: mongodb
+    networks:
+      - mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=123456
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - /data/mongdb:/data/db
+    #  - mongo_key:/mongo
+    restart: always
+    #command: ["mongod","--replSet","yfg","--keyFile","/mongo/mongo.key","--directoryperdb"]
+
+networks:
+  mongo:
+    driver: bridge
+    name: mongo
+
+#volumes:
+#  mongo_key:

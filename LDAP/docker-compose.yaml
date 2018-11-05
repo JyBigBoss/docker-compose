@@ -1,0 +1,44 @@
+version: "2.4"
+services:
+  ldap:
+    image: mwaeckerlin/openldap
+    ports:
+      - "389:389"
+      - "636:636"
+    networks:
+      - ldap
+    volumes:
+      - ldapconf:/etc/ldap
+      - ldapssl:/ssl
+      - ldapbackup:/var/backups
+      - ldapdata:/var/lib/ldap
+    environment:
+      - DOMAIN=aworld.cn
+      - ORGANIZATION="aworld"
+      - PASSWORD=admin
+      #- DEBUG_LEVEL=1
+    restart: always
+    cpus: 1.5
+    mem_limit: 1024m
+
+
+  lam:
+    image: mwaeckerlin/lam
+    ports:
+      - "80:80"
+    networks:
+      - ldap
+    restart: always
+    cpus: 1
+    mem_limit: 1024m
+
+networks:
+  ldap:
+    driver: bridge
+    name: ldap
+
+volumes:
+  ldapconf:
+  ldapssl:
+  ldapbackup:
+  ldapdata:
