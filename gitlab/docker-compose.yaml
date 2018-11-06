@@ -9,6 +9,7 @@ services:
        GITLAB_OMNIBUS_CONFIG: |
          external_url 'http://192.168.1.1'
          gitlab_rails['backup_keep_time'] = 604800
+         gitlab_rails['time_zone'] = 'Asia/Shanghai'
      ports:
        - '80:80'
        - '443:443'
