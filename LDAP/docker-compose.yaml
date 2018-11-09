@@ -14,8 +14,8 @@ services:
       - ldapbackup:/var/backups
       - ldapdata:/var/lib/ldap
     environment:
-      - DOMAIN=aworld.cn
-      - ORGANIZATION="aworld"
+      - DOMAIN=lotbrick.com
+      - ORGANIZATION="lotbrick"
       - PASSWORD=admin
       - DEBUG_LEVEL=0
     restart: always
