@@ -2,6 +2,7 @@ version: "2.4"
 services:
   ldap:
     image: mwaeckerlin/openldap
+    container_name: ldap
     ports:
       - "389:389"
       - "636:636"
@@ -16,7 +17,7 @@ services:
       - DOMAIN=aworld.cn
       - ORGANIZATION="aworld"
       - PASSWORD=admin
-      #- DEBUG_LEVEL=1
+      - DEBUG_LEVEL=0
     restart: always
     cpus: 1.5
     mem_limit: 1024m
@@ -24,10 +25,14 @@ services:
 
   lam:
     image: mwaeckerlin/lam
+    container_name: lam
     ports:
       - "80:80"
     networks:
       - ldap
+    volumes:
+      - lamconfig:/etc/ldap-account-manager
+      - lamdata:/var/lib/ldap-account-manager
     restart: always
     cpus: 1
     mem_limit: 1024m
@@ -42,3 +47,5 @@ volumes:
   ldapssl:
   ldapbackup:
   ldapdata:
+  lamconfig:
+  lamdata:
