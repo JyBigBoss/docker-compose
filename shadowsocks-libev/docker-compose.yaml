@@ -1,0 +1,11 @@
+shadowsocks:
+  image: shadowsocks/shadowsocks-libev
+  ports:
+    - "2:8388"
+    - "2:8388/udp"
+  environment:
+    - TIMEOUT=300
+    - SERVER_ADDR=0.0.0.0
+    - METHOD=aes-256-cfb
+    - PASSWORD=123456
+  restart: always

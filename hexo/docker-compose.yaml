@@ -1,0 +1,23 @@
+version: "3"
+services:
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - net
+
+  hexo:
+    build: ./hexo
+    expose:
+      - "4000"
+    volumes:
+      - /www:/opt/hexo/blog
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge
