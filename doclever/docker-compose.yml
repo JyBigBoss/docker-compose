@@ -1,0 +1,13 @@
+version: "2.2"
+services:
+  DOClever:
+    build: ./
+    restart: always
+    image: doclever:latest
+    container_name: "DOClever"
+    ports:
+      - "80:10000"
+    volumes:
+      - /doclever:/doclever
+      - ./config.json:/root/doclever/config.json
+

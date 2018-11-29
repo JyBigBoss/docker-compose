@@ -1,0 +1,51 @@
+
+git clone https://github.com/sx1989827/DOClever.git
+
+rm -fr  DOClever/Desktop
+
+cat << EOF > DOClever/config.json
+{"db":"mongodb://doclever:123456@localhost:27017/DOClever","filePath":"/declever","port":10000}
+EOF
+
+
+
+cat << EOF > Dockerfile
+FROM node:8.13.0-stretch
+COPY DOClever /root/doclever
+WORKDIR /root/doclever/
+VOLUME /doclever
+EXPOSE 10000
+CMD ["node","Server/bin/www"]
+EOF
+
+
+
+
+cat <<  EOF > docker-compose.yaml
+version: "2.2"
+services:
+  DOClever:
+    #build: ./
+	registry.cn-shenzhen.aliyuncs.com/artworld/doclever:6.2.0
+    restart: always
+    image: doclever:latest
+    container_name: "DOClever"
+    ports:
+      - "80:10000"
+    volumes:
+      - /doclever:/doclever
+      - ./config.json:/root/doclever/config.json
+#	links:
+#    - mongo:mongo
+
+#如果要连接已有数据库，在config.json中写上连接地址
+#不然就取消下面的注释，直接用本地数据库
+#  mongo:
+#    image: mongo:latest
+#    restart: always
+#    container_name: "mongodb"
+#    If you need to store your database to local please add these two lines, and define your local data direction.
+#    volumes:
+#    - /my/own/datadir:/data/db
+EOF
+
