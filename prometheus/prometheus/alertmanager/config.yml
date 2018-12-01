@@ -1,0 +1,17 @@
+global:
+  resolve_timeout: 5m
+
+#templates:
+#- '/usr/local/alertmanager/test.tmpl'
+
+route:
+    receiver: 'wechat'
+
+receivers:
+- name: 'wechat' #微信的配置
+  wechat_configs:
+  - corp_id: 'id'  #企业微信都有的四个字段
+    to_party: '2'
+    agent_id: '1000003'
+    api_secret: 'secretid'
+    send_resolved: true  #告警解除后否发送通知，这里选择发送
