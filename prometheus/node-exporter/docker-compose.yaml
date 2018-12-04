@@ -3,6 +3,7 @@ services:
   cadvisor:
     image: google/cadvisor
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /:/rootfs:ro
       - /var/run:/var/run:rw
       - /sys:/sys:ro
@@ -17,6 +18,7 @@ services:
   node-exporter:
     image: prom/node-exporter
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /:/rootfs:ro

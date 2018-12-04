@@ -1,8 +1,8 @@
 version: '2.2'
 
-volumes:
-    prometheus_data: {}
-    grafana_data: {}
+#volumes:
+#    prometheus_data: {}
+#    grafana_data: {}
 
 networks:
   front-tier:
@@ -13,8 +13,9 @@ services:
   prometheus:
     image: prom/prometheus:v2.1.0
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ./prometheus/:/etc/prometheus/
-      - prometheus_data:/prometheus
+#      - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -35,6 +36,7 @@ services:
   node-exporter:
     image: prom/node-exporter
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /:/rootfs:ro
@@ -54,6 +56,7 @@ services:
     ports:
       - 9093:9093
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ./alertmanager/:/etc/alertmanager/
     networks:
       - back-tier
@@ -65,6 +68,7 @@ services:
   cadvisor:
     image: google/cadvisor
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /:/rootfs:ro
       - /var/run:/var/run:rw
       - /sys:/sys:ro
@@ -83,7 +87,8 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - grafana_data:/var/lib/grafana
+      - /etc/localtime:/etc/localtime:ro
+#      - grafana_data:/var/lib/grafana
       - ./grafana/provisioning/:/etc/grafana/provisioning/
     env_file:
       - ./grafana/config.monitoring

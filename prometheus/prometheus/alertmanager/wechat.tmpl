@@ -1,0 +1,20 @@
+{{ define "wechat" }}{{ if gt (len .Alerts.Firing) 0 -}}告警信息:{{ range .Alerts }}
+=========================
+告警级别：{{ .Labels.severity }}
+告警类型：{{ .Labels.alertname }}
+故障主机: {{ .Labels.instance }}
+告警主题: {{ .Annotations.summary }}
+告警详情: {{ .Annotations.description }}
+触发时间: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+{{- end }}
+{{- end }}
+{{ if gt (len .Alerts.Resolved) 0 -}}恢复信息:{{ range .Alerts }}
+=========================
+主机: {{ .Labels.instance }} 
+告警主题:{{ .Annotations.summary }} 
+当前状态：已恢复！
+恢复时间: {{ .EndsAt.Format "2006-01-02 15:04:05" }}
+{{- end }}
+{{- end }}
+{{- end }}
+

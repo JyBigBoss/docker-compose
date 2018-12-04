@@ -1,22 +1,12 @@
 groups:
-- name: example
+- name: node
   rules:
-
-  # Alert for any instance that is unreachable for >5 minutes.
-  - alert: service_down
-    expr: up == 0
-    for: 2m
-    labels:
-      severity: page
+  - alert: server_status
+    expr: up{job="node-exporter"} == 0
+    for: 1s
+    labels: 
+      severity: "严重"
     annotations:
-      summary: "Instance {{ $labels.instance }} down"
-      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 2 minutes."
+      summary: "node-exporter {{ $labels.instance }} 凉了"
+      description: "{{$labels.instance}}  Node-exporter 状态为：down"
 
-  - alert: high_load
-    expr: node_load1 > 1
-    for: 2m
-    labels:
-      severity: page
-    annotations:
-      summary: "Instance {{ $labels.instance }} under high load"
-      description: "{{ $labels.instance }} of job {{ $labels.job }} is under high load."

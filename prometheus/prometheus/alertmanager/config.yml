@@ -1,17 +1,18 @@
 global:
-  resolve_timeout: 5m
+  resolve_timeout: 1m
 
-#templates:
-#- '/usr/local/alertmanager/test.tmpl'
+templates:
+- 'wechat.tmpl'
 
 route:
     receiver: 'wechat'
 
 receivers:
-- name: 'wechat' #微信的配置
+- name: 'wechat'
   wechat_configs:
-  - corp_id: 'id'  #企业微信都有的四个字段
+  - corp_id: "xxxxxxxxxxxxxxxxxxx" # 我的企业-->CorpId[在底部
     to_party: '2'
-    agent_id: '1000003'
-    api_secret: 'secretid'
-    send_resolved: true  #告警解除后否发送通知，这里选择发送
+    agent_id: '1000002'   # 企业微信-->自定应用-->AgentId
+    api_secret: "xxxxxxxxxxxxxxxxxxxxxxxxx" #企业微信-->自定应用-->Secret
+    send_resolved: true
+    message: '{{ template "wechat" . }}'
