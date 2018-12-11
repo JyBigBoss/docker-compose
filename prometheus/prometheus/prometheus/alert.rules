@@ -1,12 +1,27 @@
 groups:
 - name: node
   rules:
-  - alert: server_status
+  - alert: "主机状态"
     expr: up{job="node-exporter"} == 0
-    for: 1s
-    labels: 
+    for: 15s
+    labels:
       severity: "严重"
     annotations:
-      summary: "node-exporter {{ $labels.instance }} 凉了"
-      description: "{{$labels.instance}}  Node-exporter 状态为：down"
-
+      summary: "node-exporter Host: {{ $labels.instance }} is Down"
+      description: "{{$labels.instance}} 主机上的Node-exporter状态为：Down"
+  - alert: CPU使用率
+    expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{job="node-exporter",mode="idle"}[5m])) * 100)) > 80
+    for: 2m
+    labels:
+      severity: "严重"
+    annotations:
+      summary: "{{$labels.instance}}: CPU 使用率过高"
+      description: "{{$labels.instance}}: CPU 使用率大于80% (当前使用率: {{ $value }}%)"
+  - alert: CPU iowait
+    expr: ( avg by  (instance) (irate(node_cpu_seconds_total{job="node-exporter",mode="iowait"}[5m])) * 100 )  > 20
+    for: 15s
+    labels:
+      severity: "警告"
+    annotations:
+      summary: "{{$labels.instance}}: Disk I/O 负载过高"
+      description: "{{$labels.instance}}: 磁盘 I/O 负载过高。"

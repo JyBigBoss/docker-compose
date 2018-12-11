@@ -6,6 +6,6 @@ shadowsocks:
   environment:
     - TIMEOUT=300
     - SERVER_ADDR=0.0.0.0
-    - METHOD=aes-256-cfb
+    - METHOD=aes-256-gcm
     - PASSWORD=123456
   restart: always
