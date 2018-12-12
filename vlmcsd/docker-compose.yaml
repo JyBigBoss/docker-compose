@@ -1,0 +1,9 @@
+version: "2.4"
+services:
+  vlmcsd:
+    build: .
+    image: vlmcsd
+    container_name: vlmcsd
+    ports:
+      - "1688:1688"
+    restart: "always"
