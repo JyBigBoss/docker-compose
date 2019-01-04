@@ -1,7 +1,7 @@
 version: "2.4"
 services:
   gitlab:
-     image: gitlab/gitlab-ce:11.4.4-ce.0
+     image: gitlab/gitlab-ce:11.4.10-ce.0
      container_name: gitlab
      restart: always
      hostname: 'gitlab'
@@ -10,6 +10,26 @@ services:
          external_url 'http://192.168.1.1'
          gitlab_rails['backup_keep_time'] = 604800
          gitlab_rails['time_zone'] = 'Asia/Shanghai'
+         #gitlab_rails['ldap_enabled'] = true
+         #gitlab_rails['ldap_servers'] = YAML.load <<-EOS
+         #main:
+         #  label: 'LDAP'
+         #  host: '192.168.1.1'
+         #  port: 389
+         #  uid: 'uid'
+         #  bind_dn: 'CN=admin,DC=lotbrick,DC=com'
+         #  password: 'admin'
+         #  user_filter: 'objectclass=person'
+         #  base: 'ou=People,dc=lotbrick,dc=com'
+         #  active_directory: false
+         #  method: 'plain'
+         #  attributes:
+         #    username: ["cn"]
+         #    email: ['email']
+         #    name: 'displayName'
+         #    first_name: 'givenName'
+         #    last_name:  'sn'
+         #EOS
      ports:
        - '80:80'
        - '443:443'
