@@ -22,7 +22,7 @@ services:
       LDAP_TLS_ENFORCE: "false"
       LDAP_TLS_CIPHER_SUITE: "SECURE256:-VERS-SSL3.0"
       LDAP_TLS_PROTOCOL_MIN: "3.1"
-      LDAP_TLS_VERIFY_CLIENT: "demand"
+      LDAP_TLS_VERIFY_CLIENT: "try"
       LDAP_REPLICATION: "false"
       #LDAP_REPLICATION_CONFIG_SYNCPROV: "binddn="com=admin,com=config" bindmethod=simple credentials=$LDAP_CONFIG_PASSWORD searchbase="com=config" type=refreshAndPersist retry="60 +" timeout=1 starttls=critical"
       #LDAP_REPLICATION_DB_SYNCPROV: "binddn="com=admin,$LDAP_BASE_DN" bindmethod=simple credentials=$LDAP_ADMIN_PASSWORD searchbase="$LDAP_BASE_DN" type=refreshAndPersist interval=00:00:00:10 retry="60 +" timeout=1 starttls=critical"
@@ -42,7 +42,7 @@ services:
     domainname: "lotbrick.com" # important: same as hostname
     hostname: "lotbrick.com"
   ldap-account-manager:
-    image: jkpark/docker-ldap-account-manager
+    image: jinyunboss/ldap-account-manager:6.6
     container_name: ldap-account-manager
     volumes:
       - ./lam:/var/www/html/config
@@ -61,16 +61,4 @@ services:
 #      - "8080:80"
 #    depends_on:
 #      - openldap      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+
